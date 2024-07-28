@@ -34,7 +34,7 @@ const app = createApp({
   template: `
     <div>
       <header>
-        <h1>Barrie clean Car Detailing Services</h1>
+        <h1>Barrie Clean Car Detailing Services</h1>
         <nav>
           <ul>
             <li><a href="#services">Services</a></li>
@@ -55,13 +55,16 @@ const app = createApp({
 
         <section id="contact">
           <h2>Contact Us</h2>
-          <form @submit.prevent="submitForm">
+          <form id="contact-form" method="post" action="/submit">
             <label for="name">Name:</label>
-            <input type="text" id="name" v-model="name" required />
+            <input type="text" id="name" name="name" required>
+    
             <label for="email">Email:</label>
-            <input type="email" id="email" v-model="email" required />
-            <input type="submit" value="Submit" />
+            <input type="email" id="email" name="email" required>
+    
+            <button type="submit">Submit</button>
           </form>
+
           <p>{{ message }}</p>
         </section>
       </main>
