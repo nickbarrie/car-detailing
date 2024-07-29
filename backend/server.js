@@ -5,6 +5,8 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+app.use(express.urlencoded({ extended: true }));
+
 
 // Serve static files from the public and src directories
 app.use(express.static(path.join(__dirname, '../frontend/public')));
@@ -14,6 +16,7 @@ app.use(express.json());
 
 // API endpoint to handle form submissions
 app.post('/submit', (req, res) => {
+    console.log(req.body);
     const { name, email } = req.body;
     const output = `Name: ${name}, Email: ${email}\n`;
 
