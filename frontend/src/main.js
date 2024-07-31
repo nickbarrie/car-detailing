@@ -1,79 +1,8 @@
-const { createApp } = Vue;
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
 
-const app = createApp({
-  data() {
-    return {
-      services: [
-        {
-          imageSrc: 'images/sponge.png',
-          title: 'Exterior Wash',
-          description: 'Get your car looking shiny and new with our comprehensive exterior wash service.'
-        },
-        {
-          imageSrc: 'images/service2.jpg',
-          title: 'Interior Cleaning',
-          description: 'Keep the inside of your car spotless with our interior cleaning service.'
-        },
-        {
-          imageSrc: 'images/service3.jpg',
-          title: 'Full Detail',
-          description: 'Experience a complete car makeover with our full detail package.'
-        }
-      ],
-      name: '',
-      email: '',
-      message: ''
-    };
-  },
-  methods: {
-    submitForm() {
-      // Handle form submission
-      this.message = `Thank you for contacting us, ${this.name}!`;
-    }
-  },
-  template: `
-    <div>
-      <header>
-        <h1>Barrie Clean Car Detailing Services</h1>
-        <nav>
-          <ul>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </header>
+const app = createApp(App);
 
-      <main>
-        <section id="services">
-          <h2>Our Services</h2>
-          <div v-for="(service, index) in services" :key="index" class="service">
-            <img :src="service.imageSrc" :alt="service.title" />
-            <h3>{{ service.title }}</h3>
-            <p>{{ service.description }}</p>
-          </div>
-        </section>
-
-        <section id="contact">
-          <h2>Contact Us</h2>
-          <form id="contact-form" method="post" action="/submit">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-    
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-    
-            <button type="submit">Submit</button>
-          </form>
-
-          <p>{{ message }}</p>
-        </section>
-      </main>
-
-      <footer>
-        <p>&copy; 2024 Car Detailing Services</p>
-      </footer>
-    </div>
-  `
-});
-
+app.use(router);
 app.mount('#app');

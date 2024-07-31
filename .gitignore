@@ -1,5 +1,5 @@
 # Node modules
-/node_modules/
+/frontend/node_modules/
 
 # Environment variables
 .env
@@ -26,5 +26,5 @@
 .DS_Store
 Thumbs.db
 
-# Nginx configuration (optional, adjust as needed)
-# /etc/nginx/
+# Nginx configuration 
+node_modules

@@ -16,7 +16,6 @@ app.use(express.json());
 
 // API endpoint to handle form submissions
 app.post('/submit', (req, res) => {
-    console.log(req.body);
     const { name, email } = req.body;
     const output = `Name: ${name}, Email: ${email}\n`;
 

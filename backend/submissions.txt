@@ -1,20 +1,3 @@
-Name: Nick Barrie, Email: nickbarrie12@gmail.com
-
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-name: undefined, nmail: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
-Name: undefined, Email: undefined
+Name: Nick Barrie, Email: nb@gmail.com
 Name: Nick Barrie, Email: test@Windows
-Name: Bendy, Email: bendy@bendymail.com
+Name: Nick Barrie, Email: nickbarrie12@gmail.com
