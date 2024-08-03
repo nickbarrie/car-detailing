@@ -3,11 +3,22 @@ const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2'); // Import the mysql2 package
 
+const cors = require('cors');
+const { start } = require('repl');
+const e = require('express');
+
 const app = express();
 const port = 3000;
 
+const interiorCleainingTime = 1;
+const exteriorCleaningTime = 1;
+const fullDetailTime = 2;
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+
+app.use(cors());
 
 // Serve static files from the public and src directories
 app.use(express.static(path.join(__dirname, '../frontend/public')));
@@ -45,10 +56,23 @@ app.post('/submit', (req, res) => {
 
 // API endpoint to handle booking submissions
 app.post('/book', (req, res) => {
-  const { name, email, date, time } = req.body;
+  const { name, email, date, time, service } = req.body;
+
+  let startTime = new Date(date + 'T' + time);
+  let endTime = new Date(date + 'T' + time);
   
-  const query = 'INSERT INTO bookings (name, email, date, time) VALUES (?, ?, ?, ?)';
-  db.query(query, [name, email, date, time], (err, results) => {
+  if (service === 'Interior Detailing') {
+    endTime.setHours(endTime.getHours() + interiorCleainingTime);
+  } else if (service === 'Exterior Detailing') {
+    endTime.setHours(endTime.getHours() + exteriorCleaningTime);
+  }
+  else if (service === 'Full Detailing') {
+    endTime.setHours(endTime.getHours() + fullDetailTime);
+  }
+
+  const query = 'INSERT INTO bookings (name, email, startTime, endTime, service) VALUES (?, ?, ?, ?, ?)';
+  console.log([name, email, startTime, endTime, service]);
+  db.query(query, [name, email, startTime, endTime, service], (err, results) => {
     if (err) {
       console.error('Error saving booking:', err);
       res.status(500).send('Failed to save data');
@@ -57,6 +81,31 @@ app.post('/book', (req, res) => {
     }
   });
 });
+
+// API endpoint to fetch bookings
+
+app.get('/api/bookings', (req, res) => {
+  const query = 'SELECT service, startTime, endTime FROM bookings';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching bookings:', err);
+      res.status(500).send('Failed to fetch bookings');
+      return;
+    }
+
+    // Transform the results into a format suitable for vue-cal
+    const bookings = results.map(result => ({
+      title: result.service,
+      startTime: new Date(result.startTime), 
+      endTime: new Date(result.endTime) 
+    }));
+
+    res.json(bookings);
+  });
+});
+
+
 
 // Fallback route to serve the Vue app
 app.get('*', (req, res) => {
