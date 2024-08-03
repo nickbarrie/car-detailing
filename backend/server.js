@@ -56,10 +56,10 @@ app.post('/submit', (req, res) => {
 
 // API endpoint to handle booking submissions
 app.post('/book', (req, res) => {
-  const { name, email, date, time, service } = req.body;
+  const { name, email, time, service } = req.body;
 
-  let startTime = new Date(date + 'T' + time);
-  let endTime = new Date(date + 'T' + time);
+  let startTime = new Date(time);
+  let endTime = new Date(time);
   
   if (service === 'Interior Detailing') {
     endTime.setHours(endTime.getHours() + interiorCleainingTime);
