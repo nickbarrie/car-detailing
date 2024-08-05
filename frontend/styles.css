@@ -138,4 +138,16 @@ footer {
   width: 100%;
 }
 
+.selected-time,
+.message {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #ff20c7;
+}
+
+
+.vuecal__event {
+  background-color: #a6ecee !important; /* Blue */
+  color: #fff;
+}
 
