@@ -133,6 +133,4 @@ export default {
 };
 </script>
 
-<style>
-/* Additional custom styles if needed */
-</style>
+<style></style>

@@ -37,10 +37,11 @@ nav ul li a {
 }
 
 main {
-  max-width: 800px;
+  max-width: auto;
   margin: 20px auto;
   padding: 0 20px;
-  padding-bottom: 20px
+  padding-bottom: 20px;
+  max-height: 100%;
 }
 
 section {
@@ -55,40 +56,6 @@ h2 {
   padding-bottom: 10px;
 }
 
-.service {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: #fff;
-  border-radius: 20px;
-  transition: transform 0.3s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  justify-content: space-between;
-}
-
-.service img {
-  height: auto;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  max-width: 200px;
-  width: 100%; 
-}
-
-.service .p {
-  flex: 1; /* Allow the text area to take up remaining space */
-  margin-right: 15px; /* Add space between text and image */
-}
-
-.service h3 {
-  margin: 10px 0;
-}
-
-.service:hover {
-  transform: scale(1.05);
-}
 
 form {
   background-color: #fff;
@@ -147,7 +114,8 @@ footer {
 
 
 .vuecal__event {
-  background-color: #a6ecee !important; /* Blue */
+  background-color: #a6ecee !important;
+  /* Blue */
   color: #fff;
 }
 
@@ -174,4 +142,3 @@ a {
 a:hover {
   text-decoration: underline;
 }
-

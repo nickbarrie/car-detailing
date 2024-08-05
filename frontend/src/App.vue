@@ -1,4 +1,3 @@
-<!-- src/App.vue -->
 <template>
   <div>
     <header>
@@ -6,14 +5,17 @@
       <nav>
         <ul>
           <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/contact">Contact</router-link></li>
+          <li><router-link to="/service">Service</router-link></li>
           <li><router-link to="/calendar">Bookings</router-link></li>
+          <li><router-link to="/contact">Contact</router-link></li>
+
+
         </ul>
       </nav>
     </header>
 
     <main>
-      <router-view></router-view> <!-- This is where the calendar or other components will be displayed -->
+      <router-view></router-view>
     </main>
 
     <footer>
@@ -28,6 +30,4 @@ export default {
 }
 </script>
 
-<style>
-/* Add any global styles you need here */
-</style>
+<style></style>
