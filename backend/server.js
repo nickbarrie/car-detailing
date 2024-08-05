@@ -40,19 +40,6 @@ db.connect(err => {
   console.log('Connected to the database.');
 });
 
-// API endpoint to handle contact submissions
-app.post('/submit', (req, res) => {
-  const { name, email } = req.body;
-  const output = `Name: ${name}, Email: ${email}\n`;
-
-  fs.appendFile(path.join(__dirname, '../backend/submissions.txt'), output, (err) => {
-      if (err) {
-          res.status(500).send('Failed to save data');
-      } else {
-          res.status(200).send('Data saved successfully');
-      }
-  });
-});
 
 // API endpoint to handle booking submissions
 app.post('/book', (req, res) => {

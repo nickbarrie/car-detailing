@@ -1,18 +1,34 @@
-<!-- src/components/Contact.vue -->
 <template>
-  <div>
-    <h2>Contact Us</h2>
-    <form @submit.prevent="submitForm" >
-      <label for="name">Name:</label>
-      <input type="text" id="name" v-model="name" required />
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" required />
-
-      <button type="submit">Submit</button>
-    </form>
-
-    <p>{{ message }}</p>
+  <div class="contact-container">
+    <h1>Contact Us</h1>
+    <p>If you have any questions, feel free to reach out to us through any of the following channels:</p>
+    
+    <div class="contact-info">
+      <div class="contact-item">
+        <h2>Email</h2>
+        <p>
+          <a href="mailto:info@barrieclean.com">info@barrieclean.com</a>
+        </p>
+      </div>
+      
+      <div class="contact-item">
+        <h2>Instagram</h2>
+        <p>
+          <a href="https://www.instagram.com/BarrieClean" target="_blank" rel="noopener noreferrer">
+            @BarrieClean
+          </a>
+        </p>
+      </div>
+      
+      <div class="contact-item">
+        <h2>X (Twitter)</h2>
+        <p>
+          <a href="https://x.com/BarrieClean" target="_blank" rel="noopener noreferrer">
+            @BarrieClean
+          </a>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,28 +42,7 @@ export default {
     };
   },
   methods: {
-    async submitForm() {
-      try {
-        const response = await fetch('/api/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ name: this.name, email: this.email })
-        });
 
-        if (response.ok) {
-          this.message = `Thank you for contacting us, ${this.name}!`;
-          this.name = '';
-          this.email = '';
-        } else {
-          this.message = 'Failed to submit the form. Please try again.';
-        }
-      } catch (error) {
-        console.error('Error submitting form:', error);
-        this.message = 'An error occurred. Please try again.';
-      }
-    }
   }
 }
 </script>

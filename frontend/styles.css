@@ -151,3 +151,27 @@ footer {
   color: #fff;
 }
 
+.contact-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.contact-info {
+  margin-top: 20px;
+}
+
+.contact-item {
+  margin-bottom: 20px;
+}
+
+a {
+  color: #2196f3;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
