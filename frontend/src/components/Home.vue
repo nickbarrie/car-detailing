@@ -7,7 +7,7 @@
           <p>Your car deserves the best care. Experience our premium detailing services today!</p>
           <button @click="bookAppointment">Book an Appointment</button>
         </div>
-      </section>
+      
 
       <section id="about" class="about">
         <h2>About Us</h2>
@@ -28,6 +28,7 @@
         <button @click="viewServices">View All Services</button>
       </section>
 
+    </section>
       <section id="testimonials" class="testimonials">
         <h2>Customer Testimonials</h2>
         <blockquote>
