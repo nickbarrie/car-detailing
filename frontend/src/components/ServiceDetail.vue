@@ -128,7 +128,7 @@ export default {
 }
 
 .service-card img {
-    width: 30%;
+    width: 60%;
     height: auto;
     border-radius: 5px;
     margin-bottom: 15px;

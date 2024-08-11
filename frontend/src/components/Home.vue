@@ -32,12 +32,8 @@
       <section id="testimonials" class="testimonials">
         <h2>Customer Testimonials</h2>
         <blockquote>
-          "Amazing service! My car looks brand new. Highly recommend Barrie Clean Car Detailing!"
-          <cite> - Alex J.</cite>
-        </blockquote>
-        <blockquote>
-          "Professional and thorough detailing. I am a regular customer and always satisfied."
-          <cite> - Casey M.</cite>
+          "This site is just to demonstrate full stack development skills. It is not a real business. If you really want to get your car detailed, I'll consider it though."
+          <cite> - Nick Barrie.</cite>
         </blockquote>
       </section>
     </main>
