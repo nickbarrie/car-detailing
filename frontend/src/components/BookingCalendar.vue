@@ -112,7 +112,7 @@ export default {
 
         async fetchBookings() {
             try {
-                const response = await axios.get('http://192.168.1.28:3000/api/bookings');
+                const response = await axios.get('http://192.168.1.30:3000/api/bookings');
                 this.events = response.data.map(event => ({
                     title: event.title,
                     start: new Date(event.startTime),

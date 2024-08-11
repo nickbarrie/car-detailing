@@ -114,10 +114,22 @@ footer {
 
 
 .vuecal__event {
-  background-color: #a6ecee !important;
+  background-color: #c1e3ff !important;
   /* Blue */
   color: #fff;
+  font-size: small;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  height: 200px;           
+  border-radius: 5px;
 }
+
+
+ .vuecal__event-time {
+  display: none;
+}
+
 
 .contact-container {
   max-width: 600px;

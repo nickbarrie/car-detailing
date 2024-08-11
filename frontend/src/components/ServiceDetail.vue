@@ -84,6 +84,12 @@ export default {
     position: relative;
 }
 
+    .service-card:hover {
+        transform: scale(1.05);
+        transition-duration: .5s;
+    
+}
+
 .card {
     width: 100%;
     height: 100%;
@@ -122,12 +128,14 @@ export default {
 }
 
 .service-card img {
+    width: 30%;
     height: auto;
     border-radius: 5px;
     margin-bottom: 15px;
     max-width: 100%;
-    width: auto;
-    max-height: 75%;
+    
+
+
 }
 
 @media (max-width: 768px) {
