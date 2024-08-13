@@ -1,34 +1,25 @@
+const functions = require('firebase-functions');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2'); // Import the mysql2 package
-
 const cors = require('cors');
-const { start } = require('repl');
-const e = require('express');
 
 const app = express();
-const port = 3000;
 
-const interiorCleainingTime = 1;
+const interiorCleaningTime = 1;
 const exteriorCleaningTime = 1;
 const fullDetailTime = 2;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-
 app.use(cors());
 
-// Serve static files from the public and src directories
-app.use(express.static(path.join(__dirname, '../frontend/public')));
-app.use('/src', express.static(path.join(__dirname, '../frontend/src')));
-
-// Set up the MySQL connection
+// MySQL connection
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'c@rsBas3', // Replace with your MySQL password
+  host: 'your-cloud-host', // Use your cloud SQL host
+  user: 'your-username', // Replace with your username
+  password: 'your-password', // Replace with your password
   database: 'car_detailing'
 });
 
@@ -40,25 +31,22 @@ db.connect(err => {
   console.log('Connected to the database.');
 });
 
-
 // API endpoint to handle booking submissions
 app.post('/book', (req, res) => {
   const { name, email, time, service } = req.body;
 
   let startTime = new Date(time);
   let endTime = new Date(time);
-  
+
   if (service === 'Interior Detailing') {
-    endTime.setHours(endTime.getHours() + interiorCleainingTime);
+    endTime.setHours(endTime.getHours() + interiorCleaningTime);
   } else if (service === 'Exterior Detailing') {
     endTime.setHours(endTime.getHours() + exteriorCleaningTime);
-  }
-  else if (service === 'Full Detailing') {
+  } else if (service === 'Full Detailing') {
     endTime.setHours(endTime.getHours() + fullDetailTime);
   }
 
   const query = 'INSERT INTO bookings (name, email, startTime, endTime, service) VALUES (?, ?, ?, ?, ?)';
-  console.log([name, email, startTime, endTime, service]);
   db.query(query, [name, email, startTime, endTime, service], (err, results) => {
     if (err) {
       console.error('Error saving booking:', err);
@@ -70,10 +58,8 @@ app.post('/book', (req, res) => {
 });
 
 // API endpoint to fetch bookings
-
 app.get('/api/bookings', (req, res) => {
   const query = 'SELECT service, startTime, endTime FROM bookings';
-
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching bookings:', err);
@@ -81,24 +67,20 @@ app.get('/api/bookings', (req, res) => {
       return;
     }
 
-    // Transform the results into a format suitable for vue-cal
     const bookings = results.map(result => ({
       title: result.service,
-      startTime: new Date(result.startTime), 
-      endTime: new Date(result.endTime) 
+      startTime: new Date(result.startTime),
+      endTime: new Date(result.endTime)
     }));
 
     res.json(bookings);
   });
 });
 
-
-
 // Fallback route to serve the Vue app
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
 });
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Export the Express app as a Firebase Function
+exports.api = functions.https.onRequest(app);

@@ -32,7 +32,7 @@
       <section id="testimonials" class="testimonials">
         <h2>Customer Testimonials</h2>
         <blockquote>
-          "This site is just to demonstrate full stack development skills. It is not a real business. If you really want to get your car detailed, I'll consider it though."
+          "This site is just to demonstrate full stack development. It is not a real business. If you really want to get your car detailed, I'll consider it."
           <cite> - Nick Barrie.</cite>
         </blockquote>
       </section>

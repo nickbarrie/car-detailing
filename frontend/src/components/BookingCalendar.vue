@@ -1,135 +1,126 @@
 <template>
+  <div>
+    <vue-cal :views="['Month', 'Week', 'Day']" @cell-click="handleCellClick" :events="events" :time-from="9 * 60"
+      :time-to="21 * 60"></vue-cal>
+
     <div>
-        <vue-cal :views="['Month', 'Week', 'Day']" @cell-click="handleCellClick" :events="events" :time-from="9 * 60"
-            :time-to="21 * 60"></vue-cal>
+      <h2>Book an Appointment</h2>
+      <form @submit.prevent="submitBooking">
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="name" required />
 
-        <div>
-            <h2>Book an Appointment</h2>
-            <form @submit.prevent="submitBooking">
-                <label for="name">Name:</label>
-                <input type="text" id="name" v-model="name" required />
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required />
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" v-model="email" required />
+        <label for="Service">Service:</label>
+        <select id="Service" v-model="selectedService" required>
+          <option v-for="service in services" :key="service" :value="service">
+            {{ service }}
+          </option>
+        </select>
 
-                <label for="Service">Service:</label>
-                <select id="Service" v-model="selectedService" required>
-                    <option v-for="service in services" :key="service" :value="service">
-                        {{ service }}
-                    </option>
-                </select>
+        <p v-if="time">Selected Time: {{ formatTime(time) }}</p>
 
-                <p v-if="time">Selected Time: {{ formatTime(time) }}</p>
+        <button type="submit">Book Now</button>
 
-
-                <button type="submit">Book Now</button>
-
-                <p>{{ message }}</p>
-
-            </form>
-        </div>
+        <p>{{ message }}</p>
+      </form>
     </div>
+  </div>
 </template>
 
 <script>
 import VueCal from 'vue-cal';
 import 'vue-cal/dist/vuecal.css';
-import axios from 'axios';
+import { addBooking, fetchBookings } from '../services/firestoreService';
 
 export default {
-    components: {
-        VueCal
+  components: {
+    VueCal
+  },
+  data() {
+    return {
+      name: '',
+      email: '',
+      time: '',
+      selectedService: '',
+      services: [
+        'Full Detailing',
+        'Interior Detailing',
+        'Exterior Detailing'
+      ],
+      message: '',
+      events: []
+    };
+  },
+  methods: {
+    formatTime(time) {
+      const date = new Date(time);
+      return date.toLocaleString(); // Adjust this to your desired format
     },
-    data() {
-        return {
-            name: '',
-            email: '',
-            time: '',
-            selectedService: '',
-            services: [
-                'Full Detailing',
-                'Interior Detailing',
-                'Exterior Detailing'
-            ],
-            message: '',
-            events: []
-        };
+
+    handleCellClick(day, event) {
+      if (event === undefined) {
+        // console.log('Cell clicked:', day);
+        this.time = this.roundToNearest15Minutes(day);
+      } else {
+        //console.log('Event clicked:', event);
+      }
     },
-    methods: {
+    roundToNearest15Minutes(date) {
+      const minutes = 15;
+      const ms = 1000 * 60 * minutes;
+      return new Date(Math.round(date.getTime() / ms) * ms);
+    },
 
 
-        handleCellClick(day, event) {
-            if (event === undefined) {
-                console.log('Cell clicked:', day);
-                this.time = this.roundToNearest15Minutes(day);
-            } else {
-                console.log('Event clicked:', event);
-            }
-        },
-        roundToNearest15Minutes(date) {
-            const minutes = 15;
-            const ms = 1000 * 60 * minutes;
-            return new Date(Math.round(date.getTime() / ms) * ms);
-        },
-
-
-        async submitBooking() {
-            console.log("time: " + this.time);
-            try {
-                if (this.time === '') {
-                    console.log('Please select a time slot.');
-                    this.message = 'Please select a time slot.';
-                    return;
-                }
-                const response = await fetch('/api/book', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: this.name,
-                        email: this.email,
-                        time: this.time,
-                        service: this.selectedService
-                    })
-                });
-
-                if (response.ok) {
-                    this.message = 'Booking successful!';
-                    this.name = '';
-                    this.email = '';
-                    this.time = '';
-                    this.selectedService = '';
-                    await this.fetchBookings(); // Refresh bookings after successful booking
-                } else {
-                    this.message = 'Booking failed. Please try again.';
-                }
-            } catch (error) {
-                this.message = 'Error: ' + error.message;
-            }
-        },
-
-
-        async fetchBookings() {
-            try {
-                const response = await axios.get('http://192.168.1.30:3000/api/bookings');
-                this.events = response.data.map(event => ({
-                    title: event.title,
-                    start: new Date(event.startTime),
-                    end: new Date(event.endTime)
-                }));
-            } catch (error) {
-                console.error('Error fetching events:', error);
-            }
-        },
-        formatTime(time) {
-            const date = new Date(time);
-            return date.toLocaleString();
+    async submitBooking() {
+      try {
+        if (this.time === '') {
+          this.message = 'Please select a time slot.';
+          return;
         }
+        await addBooking(this.name, this.email, this.time, this.selectedService);
+        this.message = 'Booking successful!';
+        this.name = '';
+        this.email = '';
+        this.time = '';
+        this.selectedService = '';
+        this.fetchBookings(); // Refresh bookings after successful booking
+      } catch (error) {
+        this.message = 'Error: ' + error.message;
+      }
     },
-    async mounted() {
-        await this.fetchBookings();
+
+
+    
+    async fetchBookings() {
+      const serviceDurations = {
+      'Full Detailing': 180,
+      'Exterior Detailing': 120,
+      'Interior Detailing': 90,
+    };
+      try {
+        const response = await fetchBookings();
+        this.events = response.map(event => {
+        const startTime = new Date(event.time.seconds * 1000); // Convert timestamp
+        const duration = serviceDurations[event.service] || 60; // Get duration or default
+        const endTime = new Date(startTime.getTime() + duration * 60000); // Calculate end time
+
+        return {
+          title: event.service,
+          start: startTime,
+          end: endTime
+        };
+      });
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
     }
+  },
+  async mounted() {
+    await this.fetchBookings();
+  }
 };
 </script>
 
