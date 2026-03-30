@@ -12,7 +12,7 @@
           <img src="/BarrieCleanLogo.png" alt="Car Detailing Services" />
         </div>
         <div class="headerItem">
-          <h1>Barrie Clean Car Detailing Services</h1>
+          <h1>Barrie Clean Detailing</h1>
         </div>
         <div class="headerItem">
           <img src="/BarrieCleanLogo.png" alt="Car Detailing Services" />

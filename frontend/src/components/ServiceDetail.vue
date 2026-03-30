@@ -73,15 +73,17 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
-    height: 100%;
-    perspective: 1000px;
+    gap: 40px;
+    perspective: 1200px;
+    flex-wrap: wrap;
 }
 
+/* ===== CARD WRAPPER ===== */
 .service-card {
-    width: 100%;
-    height: 350px;
+    width: 300px;
+    height: 380px;
     position: relative;
+    transition: transform 0.3s ease;
 }
 
     .service-card:hover {
@@ -93,7 +95,7 @@ export default {
 .card {
     width: 100%;
     height: 100%;
-    transition: transform 0.6s;
+    transition: transform 0.6s ease;
     transform-style: preserve-3d;
     position: relative;
 }
@@ -114,39 +116,67 @@ export default {
 }
 
 .card-front {
-    background-color: #f9f9f9;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
+.card-front h3 {
+    margin-top: 10px;
+    color: #f5f5f5;
+}
+
+/* ===== BACK ===== */
 .card-back {
-    background-color: #2196f3;
+    background: linear-gradient(135deg, #5a102a, #9f1239);
     color: white;
     transform: rotateY(180deg);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
+.card-back h3 {
+    margin-bottom: 10px;
+}
+
+.card-back p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.card-back ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.card-back li {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+/* ===== FLIP ===== */
 .card.flipped {
     transform: rotateY(180deg);
 }
 
+/* ===== IMAGE ===== */
 .service-card img {
-    width: 60%;
+    width: 80px;
     height: auto;
-    border-radius: 5px;
     margin-bottom: 15px;
-    max-width: 100%;
-    
-
-
+    filter: brightness(0.9);
+    transition: 0.3s ease;
 }
 
+.service-card:hover img {
+    filter: brightness(1.2);
+    transform: scale(1.05);
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .services-container {
         flex-direction: column;
-    }
-}
-
-@media (min-width: 768px) {
-    .services-container {
-        flex-direction: row;
     }
 }
 </style>

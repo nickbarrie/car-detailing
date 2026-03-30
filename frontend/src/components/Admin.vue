@@ -71,30 +71,5 @@ export default {
 </script>
 
 <style scoped>
-.admin-container {
-  padding: 20px;
-}
 
-h1, h2 {
-  margin-bottom: 15px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-button {
-  margin-left: 10px;
-}
-
-section {
-  margin-bottom: 30px;
-}
 </style>
